@@ -7,39 +7,83 @@
 
 import SwiftUI
 
+enum CustomTextFieldType: String {
+    case workplace = "근무지"
+    case wage = "시급"
+    case payday = "급여일"
+    case reason = "사유"
+    case none = ""
+    
+    var placeholder: String {
+        switch self {
+        case .workplace: return "예시) 편의점"
+        case .wage: return "최저시급 9,160원"
+        case .payday: return "10"
+        case .reason: return "사유를 입력해주세요."
+        case .none: return "내용을 입력해주세요."
+        }
+    }
+}
+
 struct CustomTextField: View {
-    let placeholder: String
+    let textFieldType: CustomTextFieldType
     let keyboardType: UIKeyboardType
-    @Binding var text: String
     @State var isFocused: Bool = false
+    @Binding var text: String {
+        didSet {
+            if textFieldType == .workplace {
+                if text.count > 20 && oldValue.count <= 20 {
+                    text = oldValue
+                }
+            } else if textFieldType == .wage {
+                if text.hasPrefix("0") { text = "" }
+            } else if textFieldType == .payday {
+                if text.hasPrefix("0") { text = "" }
+                if Int(text) ?? 10 > 31 || Int(text) ?? 10 < 1 { text = "" }
+            }
+        }
+    }
     
     var body: some View {
         customTextFieldView
     }
 }
 
-extension CustomTextField {
+private extension CustomTextField {
     var customTextFieldView: some View {
         VStack {
-            UITextFieldRepresentable(
-                text: $text,
-                placeholder: placeholder,
-                isFocused: $isFocused
-            )
-            .padding(.horizontal)
-            .padding(.vertical, 9)
-            .keyboardType(keyboardType)
+            HStack {
+                UITextFieldRepresentable(
+                    text: $text,
+                    placeholder: textFieldType.placeholder,
+                    isFocused: $isFocused
+                )
+                .padding(.horizontal)
+                .keyboardType(keyboardType)
+
+                Spacer()
+                
+                if textFieldType == .workplace {
+                    HStack {
+                        Spacer()
+                        Text("\(text.count)/20")
+                            .font(.caption)
+                            .foregroundColor(.gray)
+                    }
+                    .padding(.trailing)
+                }
+            }
             
             Rectangle()
                 .frame(maxWidth: .infinity, minHeight: 2, maxHeight: 2)
                 .foregroundColor(isFocused == false ? .gray : .green)
         }
-        .frame(maxWidth: .infinity, minHeight: 56, maxHeight: 56)
+        .frame(maxWidth: .infinity, minHeight: 30, maxHeight: 30)
     }
 }
 
 // https://medium.com/hcleedev/swift-textfield-기존-focus-방식과-새롭게-등장한-focusstate-활용하기-8725c7425140
-struct UITextFieldRepresentable: UIViewRepresentable {
+private struct UITextFieldRepresentable: UIViewRepresentable {
     @Binding var text: String
     var placeholder: String
     var isFirstResponder: Bool = false

@@ -7,18 +7,18 @@
 
 import SwiftUI
 
-enum ButtonStyle {
+enum StrokeButtonStyle {
     case add
     case destructive
 }
 
 struct StrokeButton: View {
-    let title: String
-    let buttonStyle: ButtonStyle
+    let label: String
+    let buttonStyle: StrokeButtonStyle
     let action: () -> Void
-
-    init(title: String, _ buttonStyle: ButtonStyle, action: @escaping () -> Void) {
-        self.title = title
+    
+    init(label: String, buttonStyle: StrokeButtonStyle, action: @escaping () -> Void) {
+        self.label = label
         self.buttonStyle = buttonStyle
         self.action = action
     }
@@ -32,14 +32,17 @@ struct StrokeButton: View {
     }
 }
 
-extension StrokeButton {
+private extension StrokeButton {
     var strokeButtonContainerView: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 10)
-                .strokeBorder(buttonStyle == .add ? .gray : .red, lineWidth: 1)
+                .strokeBorder(
+                    buttonStyle == .add ? .gray : .red,
+                    lineWidth: 1
+                )
                 .frame(maxWidth: .infinity, minHeight: 56, maxHeight: 56)
-
-            Text(title)
+            
+            Text(label)
                 .foregroundColor(buttonStyle == .add ? .gray : .red)
         }
     }
@@ -47,6 +50,9 @@ extension StrokeButton {
 
 struct StrokeButton_Previews: PreviewProvider {
     static var previews: some View {
-        StrokeButton(title: "+ 근무 추가하기", .destructive) { }
+        StrokeButton(
+            label: "+ 근무 추가하기",
+            buttonStyle: .destructive
+        ) { }
     }
 }

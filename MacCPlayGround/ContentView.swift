@@ -11,46 +11,54 @@ struct ContentView: View {
     @State var text: String = ""
     @State var text2: String = ""
     @State var text3: String = ""
+    @State var text4: String = ""
     
     var body: some View {
         VStack {
             ScheduleContainer(
-                workDays: ["월", "목", "토"],
-                startingHour: 9,
+                repeatedSchedule: ["월", "화", "수", "목", "금", "토", "일"],
+                startTime: 9,
                 startingMinute: 0,
-                finishingHour: 17,
+                endTime: 17,
                 finishingMinute: 30
             )
 
-            CompleteButton(
-                title: "확인",
-                isAvailable: true
-            ) { }
-            
             StrokeButton(
-                title: "근무지 삭제하기",
-                .destructive
+                label: "근무지 삭제하기",
+                buttonStyle: .destructive
             ) { }
             
             CustomTextField(
-                placeholder: "근무지명을 입력해주세요",
+                textFieldType: .reason,
                 keyboardType: .default,
                 text: $text
             )
             .padding(.bottom)
-            
+
             CustomTextFieldContainer(
-                containerType: .wage,
-                placeholder: "9,160",
+                containerType: .workplace,
                 keyboardType: .numberPad,
                 text: $text2
             )
             .padding(.bottom)
             
             CustomTextFieldContainer(
-                containerType: .payday,
-                placeholder: "10",
+                containerType: .wage,
                 keyboardType: .numberPad,
+                text: $text4
+            )
+            .padding(.bottom)
+            
+            CustomTextFieldContainer(
+                containerType: .payday,
+                keyboardType: .default,
+                text: $text3
+            )
+            .padding(.bottom)
+            
+            CustomTextFieldContainer(
+                containerType: .reason,
+                keyboardType: .default,
                 text: $text3
             )
 

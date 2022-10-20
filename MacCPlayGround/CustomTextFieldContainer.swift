@@ -7,25 +7,17 @@
 
 import SwiftUI
 
-enum ContainerType: String {
-    case workplace = "근무지"
-    case wage = "시급"
-    case payday = "급여일"
-}
-
 struct CustomTextFieldContainer: View {
-    let containerType: ContainerType
-    let placeholder: String
+    let containerType: CustomTextFieldType
     let keyboardType: UIKeyboardType
     var text: Binding<String>
     
-    init(containerType: ContainerType, placeholder: String, keyboardType: UIKeyboardType, text: Binding<String>) {
+    init(containerType: CustomTextFieldType, keyboardType: UIKeyboardType, text: Binding<String>) {
         self.containerType = containerType
-        self.placeholder = placeholder
         self.keyboardType = keyboardType
         self.text = text
     }
-
+    
     var body: some View {
         VStack {
             titleHeader
@@ -34,40 +26,50 @@ struct CustomTextFieldContainer: View {
     }
 }
 
-extension CustomTextFieldContainer {
+private extension CustomTextFieldContainer {
     var titleHeader: some View {
         HStack {
             Text(containerType.rawValue)
                 .font(.caption)
                 .foregroundColor(.gray)
-
+            
             Spacer()
         }
     }
     
     @ViewBuilder var container: some View {
         switch containerType {
-        case .workplace:
-            workplaceView
-        case .wage:
-            wageView
-        case .payday:
-            paydayView
+        case .workplace: workplaceView
+        case .wage: wageView
+        case .payday: paydayView
+        case .reason: reasonView
+        case .none: EmptyView()
         }
     }
     
     var workplaceView: some View {
-        CustomTextField(
-            placeholder: placeholder,
-            keyboardType: keyboardType,
-            text: text
-        )
+        VStack {
+            CustomTextField(
+                textFieldType: .workplace,
+                keyboardType: keyboardType,
+                text: text
+            )
+            
+            if text.wrappedValue.count > 20 {
+                HStack {
+                    Text("20자 이상 입력할 수 없어요.")
+                        .font(.footnote)
+                        .foregroundColor(.red)
+                    Spacer()
+                }
+            }
+        }
     }
-
+    
     var wageView: some View {
         HStack {
             CustomTextField(
-                placeholder: placeholder,
+                textFieldType: .wage,
                 keyboardType: keyboardType,
                 text: text
             )
@@ -77,18 +79,40 @@ extension CustomTextFieldContainer {
             Text("원")
         }
     }
-
+    
     var paydayView: some View {
-        HStack {
+        HStack(alignment: .top) {
             Text("매월")
             Spacer()
-            CustomTextField(
-                placeholder: placeholder,
-                keyboardType: keyboardType,
-                text: text
-            )
+            VStack(spacing: 0) {
+                CustomTextField(
+                    textFieldType: .payday,
+                    keyboardType: keyboardType,
+                    text: text
+                )
+                
+                if Int(text.wrappedValue) ?? 10 > 31 {
+                    HStack {
+                        Text("1~31 사이의 숫자를 입력해주세요")
+                            .font(.footnote)
+                            .foregroundColor(.red)
+                        Spacer()
+                    }
+                    .padding(.top, 4)
+                }
+                
+            }
             Spacer()
             Text("일")
         }
+    }
+    
+    var reasonView: some View {
+        CustomTextField(
+            textFieldType: .reason,
+            keyboardType: keyboardType,
+            text: text
+        )
+        
     }
 }

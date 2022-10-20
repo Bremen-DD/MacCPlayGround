@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CompleteButton: View {
     let title: String
-    var isAvailable: Bool
+    let isAvailable: Bool
     let action: () -> Void
     
     init(title: String, isAvailable: Bool, action: @escaping () -> Void) {
@@ -28,7 +28,7 @@ struct CompleteButton: View {
     }
 }
 
-extension CompleteButton {
+private extension CompleteButton {
     var compleButtonContainerView: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 10)
