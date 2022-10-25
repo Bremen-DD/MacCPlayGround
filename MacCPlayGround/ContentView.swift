@@ -15,53 +15,8 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
-            ScheduleContainer(
-                repeatedSchedule: ["월", "화", "수", "목", "금", "토", "일"],
-                startTime: 9,
-                startingMinute: 0,
-                endTime: 17,
-                finishingMinute: 30
-            )
-
-            StrokeButton(
-                label: "근무지 삭제하기",
-                buttonStyle: .destructive
-            ) { }
-            
-            CustomTextField(
-                textFieldType: .reason,
-                keyboardType: .default,
-                text: $text
-            )
-            .padding(.bottom)
-
-            CustomTextFieldContainer(
-                containerType: .workplace,
-                keyboardType: .numberPad,
-                text: $text2
-            )
-            .padding(.bottom)
-            
-            CustomTextFieldContainer(
-                containerType: .wage,
-                keyboardType: .numberPad,
-                text: $text4
-            )
-            .padding(.bottom)
-            
-            CustomTextFieldContainer(
-                containerType: .payday,
-                keyboardType: .default,
-                text: $text3
-            )
-            .padding(.bottom)
-            
-            CustomTextFieldContainer(
-                containerType: .reason,
-                keyboardType: .default,
-                text: $text3
-            )
-
+            RoundedRectangle(cornerRadius: 50)
+                .stroke(.black, lineWidth: 10)
         }
         .padding()
     }
