@@ -21,13 +21,19 @@ struct WeeklyCalendarLoadLogic: View {
     var currentWeek: [Int] {
         return viewModel.loadTheFirstDayOfWeek()
     }
+    let mockData: [MockData] = [
+        MockData(workspace: "팍이네 팍팍 감자탕", workDay: "월"),
+        MockData(workspace: "팍이네 팍팍 감자탕", workDay: "화"),
+        MockData(workspace: "팍이네 팍팍 감자탕", workDay: "수"),
+        MockData(workspace: "팍이네 팍팍 감자탕", workDay: "목"),
+        MockData(workspace: "팍이네 팍팍 감자탕", workDay: "금")
+    ]
+    let formatter = DateFormatter(dateFormatType: .weekday)
+    
     var body: some View {
         buttonMonthSection
-            .padding(.bottom)
-        weekDaysContainer
-        datesContainer
-            .padding(.bottom)
-        buttonWeekSection
+        scheduleContainer
+        Spacer()
     }
 }
 
@@ -37,24 +43,35 @@ private extension WeeklyCalendarLoadLogic {
             Button("<") { viewModel.getPreviousMonth() }
             Text(currentMonth)
             Button(">") { viewModel.getNextMonth() }
+            Spacer()
+            Button("메일함") { }
+            Button("추가") { }
         }
-        
+        .padding()
     }
-    var buttonWeekSection: some View {
-        HStack {
-            Button("<") { viewModel.getPreviousWeek() }
-            Text("한 주씩 옮기기 ㅡㅡ")
-            Button(">") { viewModel.getNextWeek() }
+    
+    var scheduleContainer: some View {
+        VStack {
+            weekDaysContainer
+            datesContainer
+            Spacer()
+            scheduleList
         }
+        .frame(maxHeight: .infinity)
+        .background(.gray)
+        .ignoresSafeArea()
+        .cornerRadius(10, [.topLeft, .topRight])
+        
     }
     
     var weekDaysContainer: some View {
         HStack {
             ForEach(weekDays, id: \.self) { day in
                 Text(day)
+                    .frame(maxWidth: .infinity)
             }
         }
-        .frame(maxWidth: .infinity)
+        .padding(.top)
     }
     
     var datesContainer: some View {
@@ -73,7 +90,6 @@ private extension WeeklyCalendarLoadLogic {
                 if newValue == 2 { viewModel.getNextWeek() }
                 if newValue == 0 { viewModel.getPreviousWeek() }
                 selection = 1
-                
             }
         }
     }
@@ -82,27 +98,42 @@ private extension WeeklyCalendarLoadLogic {
         HStack {
             ForEach(currentWeek, id: \.self) { weekday in
                 Text("\(weekday)")
+                    .frame(maxWidth: .infinity)
                     .foregroundColor(viewModel.verifyFocusDate(weekday) ? .red : .black)
             }
         }
     }
     
+    var scheduleList: some View {
+        VStack {
+            ForEach(mockData, id: \.self) { data in
+                if data.workDay == formatter.string(from: viewModel.currentDate) {
+                    HStack {
+                        Text(data.workspace)
+                        Text(data.workDay)
+                            .font(.title)
+                    }
+                    .background(.white)
+                }
+            }
+            Spacer()
+        }
+    }
 }
 
+extension View {
+    func cornerRadius(_ radius: CGFloat, _ corners: UIRectCorner) -> some View {
+        clipShape( RoundedCorner(radius: radius, corners: corners) )
+    }
+}
 
+struct RoundedCorner: Shape {
 
+    var radius: CGFloat = .infinity
+    var corners: UIRectCorner = .allCorners
 
-//dateManager.date
-
-//CalendarCell(
-//    startingPosition: startingPosition,
-//    totalDaysInMonth: totalDaysInMonth,
-//    totalDaysInPreviousMonth: totalDaysInPreviousMonth
-//)
-
-//if let totalDaysInMonth = totalDaysInMonth,
-//   let startingPosition = startingPosition,
-//   let totalDaysInPreviousMonth = totalDaysInPreviousMonth {
-//
-//    Text("1")
-//}
+    func path(in rect: CGRect) -> Path {
+        let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+        return Path(path.cgPath)
+    }
+}
