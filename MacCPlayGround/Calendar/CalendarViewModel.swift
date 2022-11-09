@@ -11,6 +11,7 @@ import SwiftUI
 
 final class CalendarViewModel: ObservableObject {
     let calendar = Calendar.current
+    let weekDays: [String] = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
     @Published var nextDate = Calendar.current.date(byAdding: .weekOfMonth, value: 1, to: Date())! // ✅
     @Published var previousDate = Calendar.current.date(byAdding: .weekOfMonth, value: -1, to: Date())! // ✅
     @Published var currentDate = Date() {
@@ -72,12 +73,13 @@ final class CalendarViewModel: ObservableObject {
     }
     
     // 오늘 날짜가 속한 주의 날짜 데이터를 반환합니다.
+    // https://stackoverflow.com/questions/42981665/how-to-get-all-days-in-current-week-in-swift
     func loadTheFirstDayOfWeek(_ date: Date) -> [CalendarModel] {
         let today = calendar.startOfDay(for: date)
         let dayOfWeek = calendar.component(.weekday, from: today)
         
         // .range: 1..<8 을 반환합니다. 1 = 일요일, 7 = 토요일
-        // .compactMap: 각 range의 값에서 오늘의 요일 만큼 차감한 값을 today에 적용합니다.
+        // .compactMap: 각 range의 값에서 오늘의 요일 만큼 차감한 값을 today에 적용합니다. nil의 경우는 제외합니다.
         // ex
         //  1  2  3 4 5 6 7 (range)
         // -3 -2 -1 0 1 2 3 (today가 수요일인 경우를 적용, 4 = 수요일)
@@ -109,10 +111,10 @@ final class CalendarViewModel: ObservableObject {
     }
     
     // 터치된 날짜의 월 데이터를 판단합니다.
-    func verifyCurrentMonth(_ date: Int) -> Color {
+    func verifyCurrentMonth(_ date: Int) -> Bool {
         let components = calendar.dateComponents([.year, .month, .day], from: currentDate)
-        if date == components.month! { return .black } // ✅
-        return .gray
+        if date == components.month! { return true } // ✅
+        return false
     }
     
     // 사용자가 다른 날짜를 터치했을 때 Focus를 변경합니다.
@@ -126,6 +128,22 @@ final class CalendarViewModel: ObservableObject {
         currentDate = focusDate
     }
     
+    func verifyCurrentWeek(_ currentWeek: [CalendarModel]) -> MismatchWeekType {
+        let components = calendar.dateComponents([.month], from: currentDate)
+        let month = components.month!
+        
+        if currentWeek[0].month < month { return .past}
+        if currentWeek[currentWeek.count - 1].month > month { return .future }
+        
+        return .current
+    }
+    
+}
+
+enum MismatchWeekType {
+    case past
+    case current
+    case future
 }
 
 // .dayInt인 경우, 일요일을 시작으로 1, 2, 3 ... 순으로 표기됩니다.

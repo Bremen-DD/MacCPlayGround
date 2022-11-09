@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7A47BDD3291BF6DB001D5844 /* ScheduleListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A47BDD2291BF6DB001D5844 /* ScheduleListView.swift */; };
+		7A47BDD5291C029E001D5844 /* ScheduleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A47BDD4291C029E001D5844 /* ScheduleCell.swift */; };
 		7A93757E29000BCA00D6D5BE /* MacCPlayGroundApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A93757D29000BCA00D6D5BE /* MacCPlayGroundApp.swift */; };
 		7A93758029000BCA00D6D5BE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A93757F29000BCA00D6D5BE /* ContentView.swift */; };
 		7A93758229000BCB00D6D5BE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7A93758129000BCB00D6D5BE /* Assets.xcassets */; };
@@ -23,6 +25,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7A47BDD2291BF6DB001D5844 /* ScheduleListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleListView.swift; sourceTree = "<group>"; };
+		7A47BDD4291C029E001D5844 /* ScheduleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleCell.swift; sourceTree = "<group>"; };
 		7A93757A29000BCA00D6D5BE /* MacCPlayGround.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MacCPlayGround.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A93757D29000BCA00D6D5BE /* MacCPlayGroundApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacCPlayGroundApp.swift; sourceTree = "<group>"; };
 		7A93757F29000BCA00D6D5BE /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -98,6 +102,8 @@
 			children = (
 				89A723CD291A387A00D063F4 /* CalendarViewModel.swift */,
 				89A723CA291A357C00D063F4 /* WeeklyCalendarLoadLogic.swift */,
+				7A47BDD2291BF6DB001D5844 /* ScheduleListView.swift */,
+				7A47BDD4291C029E001D5844 /* ScheduleCell.swift */,
 			);
 			path = Calendar;
 			sourceTree = "<group>";
@@ -173,7 +179,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				898A5ECA290861CD00A6BEF7 /* InputFormElement.swift in Sources */,
+				7A47BDD3291BF6DB001D5844 /* ScheduleListView.swift in Sources */,
 				7A93758029000BCA00D6D5BE /* ContentView.swift in Sources */,
+				7A47BDD5291C029E001D5844 /* ScheduleCell.swift in Sources */,
 				7A9375902900140E00D6D5BE /* ScheduleContainer.swift in Sources */,
 				7A937592290018F400D6D5BE /* CustomTextField.swift in Sources */,
 				7A9375942900274C00D6D5BE /* CustomTextFieldContainer.swift in Sources */,
