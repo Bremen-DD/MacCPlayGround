@@ -10,17 +10,8 @@ import SwiftUI
 struct WeeklyCalendarLoadLogic: View {
     @ObservedObject var viewModel = CalendarViewModel()
     @State var selection = 1
-    let weekDays: [String] = ["일", "월", "화", "수", "목", "금", "토"]
-    var currentMonth: String {
-        let components = Calendar.current.dateComponents([.year, .month], from: viewModel.currentDate)
-        let year = components.year!
-        let month = components.month!
-        
-        return "\(year). \(month)"
-    }
-    var currentWeek: [Int] {
-        return viewModel.loadTheFirstDayOfWeek()
-    }
+    let weekDays: [String] = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
+    let formatter = DateFormatter(dateFormatType: .weekday)
     let mockData: [MockData] = [
         MockData(workspace: "팍이네 팍팍 감자탕", workDay: "월"),
         MockData(workspace: "팍이네 팍팍 감자탕", workDay: "화"),
@@ -28,21 +19,52 @@ struct WeeklyCalendarLoadLogic: View {
         MockData(workspace: "팍이네 팍팍 감자탕", workDay: "목"),
         MockData(workspace: "팍이네 팍팍 감자탕", workDay: "금")
     ]
-    let formatter = DateFormatter(dateFormatType: .weekday)
-    
+    var currentMonth: String {
+        let components = Calendar.current.dateComponents([.year, .month], from: viewModel.currentDate)
+        let year = components.year!
+        let month = components.month!
+        
+        return "\(year). \(month)"
+    }
+    var currentWeek: [CalendarModel] {
+        return viewModel.loadTheFirstDayOfWeek(viewModel.currentDate)
+    }
+    var previousWeek: [CalendarModel] {
+        return viewModel.loadTheFirstDayOfWeek(viewModel.previousDate)
+    }
+    var nextWeek: [CalendarModel] {
+        return viewModel.loadTheFirstDayOfWeek(viewModel.nextDate)
+    }
+
     var body: some View {
-        buttonMonthSection
-        scheduleContainer
-        Spacer()
+        VStack {
+            buttonMonthSection
+            scheduleContainer
+            Spacer()
+        }
+        .background(.gray)
     }
 }
 
 private extension WeeklyCalendarLoadLogic {
     var buttonMonthSection: some View {
         HStack {
-            Button("<") { viewModel.getPreviousMonth() }
-            Text(currentMonth)
-            Button(">") { viewModel.getNextMonth() }
+            Group {
+                Button {
+                    viewModel.getPreviousMonth()
+                } label: {
+                    Image(systemName: "chevron.left")
+                }
+                Text(currentMonth)
+                Button {
+                    viewModel.getNextMonth()
+                } label: {
+                    Image(systemName: "chevron.right")
+                }
+
+            }
+            .font(.title)
+            .foregroundColor(.black)
             Spacer()
             Button("메일함") { }
             Button("추가") { }
@@ -57,18 +79,17 @@ private extension WeeklyCalendarLoadLogic {
             Spacer()
             scheduleList
         }
-        .frame(maxHeight: .infinity)
-        .background(.gray)
-        .ignoresSafeArea()
-        .cornerRadius(10, [.topLeft, .topRight])
-        
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(.white)
+        .cornerRadius(30, [.topLeft, .topRight])
     }
     
     var weekDaysContainer: some View {
         HStack {
-            ForEach(weekDays, id: \.self) { day in
-                Text(day)
+            ForEach(0..<7) { index in
+                Text(weekDays[index])
                     .frame(maxWidth: .infinity)
+                    .foregroundColor(viewModel.verifyCurrentMonth(currentWeek[index].month))
             }
         }
         .padding(.top)
@@ -77,11 +98,11 @@ private extension WeeklyCalendarLoadLogic {
     var datesContainer: some View {
         VStack {
             TabView(selection: $selection) {
-                weekdayBox
+                previousWeekdayBox
                     .tag(0)
                 weekdayBox
                     .tag(1)
-                weekdayBox
+                nextWeekdayBox
                     .tag(2)
             }
             .frame(height: 50)
@@ -96,10 +117,45 @@ private extension WeeklyCalendarLoadLogic {
     
     var weekdayBox: some View {
         HStack {
-            ForEach(currentWeek, id: \.self) { weekday in
-                Text("\(weekday)")
+            ForEach(0..<7) { index in
+                Button("\(currentWeek[index].day)") {
+                    viewModel.changeFocusDate(currentWeek[index].day)
+                }
+                .frame(maxWidth: .infinity)
+                .foregroundColor(
+                    viewModel.verifyFocusDate(currentWeek[index].day)
+                    ? .red
+                    : viewModel.verifyCurrentMonth(currentWeek[index].month)
+                )
+                .disabled(viewModel.verifyCurrentMonth(currentWeek[index].month) == .black ? false : true)
+            }
+        }
+    }
+    
+    var previousWeekdayBox: some View {
+        HStack {
+            ForEach(0..<7) { index in
+                Text("\(previousWeek[index].day)")
                     .frame(maxWidth: .infinity)
-                    .foregroundColor(viewModel.verifyFocusDate(weekday) ? .red : .black)
+                    .foregroundColor(
+                        viewModel.verifyFocusDate(previousWeek[index].day)
+                        ? .red
+                        : viewModel.verifyCurrentMonth(previousWeek[index].month)
+                    )
+            }
+        }
+    }
+
+    var nextWeekdayBox: some View {
+        HStack {
+            ForEach(0..<7) { index in
+                Text("\(nextWeek[index].day)")
+                    .frame(maxWidth: .infinity)
+                    .foregroundColor(
+                        viewModel.verifyFocusDate(nextWeek[index].day)
+                        ? .red
+                        : viewModel.verifyCurrentMonth(nextWeek[index].month)
+                    )
             }
         }
     }
@@ -136,4 +192,9 @@ struct RoundedCorner: Shape {
         let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
         return Path(path.cgPath)
     }
+}
+
+struct MockData: Hashable {
+    let workspace: String
+    let workDay: String
 }
