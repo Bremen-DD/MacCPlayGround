@@ -12,10 +12,11 @@ struct WeeklyCalendarLoadLogic: View {
     @ObservedObject var viewModel = CalendarViewModel()
     @State var selection = 1
     let formatter = DateFormatter(dateFormatType: .weekday)
+    let weekDays: [String] = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
     var currentMonth: String {
         let components = Calendar.current.dateComponents([.year, .month], from: viewModel.currentDate)
-        let year = components.year!
-        let month = components.month!
+        let year = components.year! // ✅
+        let month = components.month! // ✅
         
         return "\(year). \(month)"
     }
@@ -28,7 +29,7 @@ struct WeeklyCalendarLoadLogic: View {
     var nextWeek: [CalendarModel] {
         return viewModel.loadTheFirstDayOfWeek(viewModel.nextDate)
     }
-
+    
     var body: some View {
         VStack {
             header
@@ -43,22 +44,20 @@ private extension WeeklyCalendarLoadLogic {
         HStack(spacing: 0) {
             Group {
                 Button {
-                    viewModel.getPreviousMonth()
+                    viewModel.didTapPreviousMonth()
                 } label: {
                     Image(systemName: "chevron.left")
                 }
                 Text(currentMonth)
                 Button {
-                    viewModel.getNextMonth()
+                    viewModel.didTapNextMonth()
                 } label: {
                     Image(systemName: "chevron.right")
                 }
             }
             .font(.title)
             .foregroundColor(.black)
-            
             Spacer()
-            
             Button("메일함") { }
                 .padding(.horizontal)
                 .foregroundColor(.black)
@@ -95,18 +94,9 @@ private extension WeeklyCalendarLoadLogic {
     var weekDaysContainer: some View {
         HStack(spacing: 0) {
             ForEach(0..<7) { index in
-                VStack {
-                    if !viewModel.verifyCurrentMonth(currentWeek[index].month) {
-                        Text("\(currentWeek[index].month)")
-                            .font(.caption2)
-                    } else {
-                        Text("")
-                            .font(.caption2)
-                    }
-                    Text(viewModel.weekDays[index])
-                        .font(.caption)
-                        .frame(maxWidth: .infinity)
-                }
+                Text(weekDays[index])
+                    .font(.caption)
+                    .frame(maxWidth: .infinity)
             }
         }
         .padding(.top)
@@ -122,21 +112,11 @@ private extension WeeklyCalendarLoadLogic {
             .frame(height: 50)
             .tabViewStyle(.page(indexDisplayMode: .never))
             .onChange(of: selection) { newValue in
-                selection = 1
-
-                if newValue == 0 { viewModel.getPreviousWeek() }
-                if newValue == 2 { viewModel.getNextWeek() }
-
-//                let result = viewModel.verifyCurrentWeek(currentWeek)
-//                switch result {
-//                case .past:
-//                    isPast = true
-//                case .current:
-//                    isPast = false
-//                    isFuture = false
-//                case .future:
-//                    isFuture = true
-//                }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    selection = 1
+                    if newValue == 0 { viewModel.didScrollToPreviousWeek() }
+                    if newValue == 2 { viewModel.didScrollToNextWeek() }
+                }
             }
         }
     }
@@ -148,34 +128,33 @@ private extension WeeklyCalendarLoadLogic {
                     VStack {
                         Button {
                             withAnimation {
-                                viewModel.changeFocusDate(currentWeek[index].day)
+                                viewModel.didTapDate(currentWeek[index].day)
                             }
                         } label: {
                             Text("\(currentWeek[index].day)")
                                 .font(.callout)
                                 .foregroundColor(.black)
                         }
-                        .frame(maxWidth: .infinity)
+                        .frame(minWidth: 49.5, maxWidth: .infinity)
                         .disabled(viewModel.verifyCurrentMonth(currentWeek[index].month) ? false : true)
-
+                        
                         Circle()
                             .frame(width: 6, height: 6)
                             .foregroundColor(.green)
                     }
-
+                    
                     if viewModel.verifyFocusDate(currentWeek[index].day) {
-                        RoundedRectangle(cornerRadius: 15)
-                            .foregroundColor(.blue)
-                            .overlay {
-                                VStack {
-                                    Text("\(currentWeek[index].day)")
-                                        .font(.callout)
-                                        .foregroundColor(.white)
-                                    Circle()
-                                        .frame(width: 6, height: 6)
-                                        .foregroundColor(.white)
-                                }
-                            }
+                        VStack {
+                            Text("\(currentWeek[index].day)")
+                                .font(.callout)
+                                .foregroundColor(.white)
+                            Circle()
+                                .frame(width: 6, height: 6)
+                                .foregroundColor(.white)
+                        }
+                        .padding()
+                        .background(.blue)
+                        .cornerRadius(15)
                     }
                 }
             }
@@ -195,7 +174,7 @@ private extension WeeklyCalendarLoadLogic {
             }
         }
     }
-
+    
     var nextWeekdayBox: some View {
         HStack(spacing: 0) {
             ForEach(0..<7) { index in
@@ -230,14 +209,9 @@ extension View {
 struct RoundedCorner: Shape {
     var radius: CGFloat = .infinity
     var corners: UIRectCorner = .allCorners
-
+    
     func path(in rect: CGRect) -> Path {
         let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
         return Path(path.cgPath)
     }
-}
-
-struct MockData: Hashable {
-    let workspace: String
-    let workDay: String
 }

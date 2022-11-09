@@ -11,7 +11,6 @@ import SwiftUI
 
 final class CalendarViewModel: ObservableObject {
     let calendar = Calendar.current
-    let weekDays: [String] = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
     @Published var nextDate = Calendar.current.date(byAdding: .weekOfMonth, value: 1, to: Date())! // ✅
     @Published var previousDate = Calendar.current.date(byAdding: .weekOfMonth, value: -1, to: Date())! // ✅
     @Published var currentDate = Date() {
@@ -25,22 +24,44 @@ final class CalendarViewModel: ObservableObject {
         }
     }
     
+    func didScrollToNextWeek() {
+        getNextWeek()
+    }
+    
+    func didScrollToPreviousWeek() {
+        getPreviousWeek()
+    }
+    
+    func didTapNextMonth() {
+        getNextMonth()
+    }
+    
+    func didTapPreviousMonth() {
+        getPreviousMonth()
+    }
+    
+    func didTapDate(_ date: Int) {
+        changeFocusDate(date)
+    }
+}
+
+extension CalendarViewModel {
     // 일주일 뒤의 날짜를 반환합니다.
-    func getNextWeek() {
+    private func getNextWeek() {
         guard let dateOfNextWeek = calendar.date(byAdding: .weekOfMonth, value: 1, to: currentDate)
         else { return }
         currentDate = dateOfNextWeek
     }
 
     // 일주일 전의 날짜를 반환합니다.
-    func getPreviousWeek() {
+    private func getPreviousWeek() {
         guard let dateOfPreviousWeek = calendar.date(byAdding: .weekOfMonth, value: -1, to: currentDate)
         else { return }
         currentDate = dateOfPreviousWeek
     }
     
     // 사용자가 getNextWeek, getPreviousWeek 함수를 통해 주 단위 변경을 진행한 경우를 초기화합니다.
-    func resetWeekChanges() -> Date {
+    private func resetWeekChanges() -> Date {
         // 현재 활성화된 날짜의 연, 월 데이터를 추출합니다.
         let currentComponents = calendar.dateComponents([.year, .month], from: currentDate)
         let year = currentComponents.year! // ✅
@@ -58,7 +79,7 @@ final class CalendarViewModel: ObservableObject {
     
     // 한 달 뒤의 날짜를 반환합니다.
     // 갱신 이후 한 달 전의 오늘 날짜로 포커싱 됩니다. (ex. 11월 9일 -> 12월 9일)
-    func getNextMonth() {
+    private func getNextMonth() {
         let resetWeeks = resetWeekChanges()
         guard let dateOfNextMonth = calendar.date(byAdding: .month, value: 1, to: resetWeeks) else { return }
         currentDate = dateOfNextMonth
@@ -66,10 +87,21 @@ final class CalendarViewModel: ObservableObject {
 
     // 한 달 전의 날짜를 반환합니다.
     // 갱신 이후 한 달 전의 오늘 날짜로 포커싱 됩니다. (ex. 11월 9일 -> 10월 9일)
-    func getPreviousMonth() {
+    private func getPreviousMonth() {
         let resetWeeks = resetWeekChanges()
         guard let dateOfPreviousMonth = calendar.date(byAdding: .month, value: -1, to: resetWeeks) else { return }
         currentDate = dateOfPreviousMonth
+    }
+    
+    // 사용자가 다른 날짜를 터치했을 때 Focus를 변경합니다.
+    private func changeFocusDate(_ date: Int) {
+        let components = calendar.dateComponents([.year, .month], from: currentDate)
+        let year = components.year! // ✅
+        let month = components.month! // ✅
+        let focusDateComponents = DateComponents(year: year, month: month, day: date)
+        let focusDate = calendar.date(from: focusDateComponents)!
+        
+        currentDate = focusDate
     }
     
     // 오늘 날짜가 속한 주의 날짜 데이터를 반환합니다.
@@ -89,6 +121,7 @@ final class CalendarViewModel: ObservableObject {
             .compactMap { calendar.date(byAdding: .day, value: $0 - dayOfWeek, to: today) }
         
         // 반환된 배열의 날짜 데이터를 각각 추출합니다.
+        // UI 작업을 위해 임시로 사용합니다.
         let weekdayArray = days.map {
             let components = calendar.dateComponents([.year, .month, .day], from: $0)
             let year = components.year! // ✅
@@ -116,34 +149,6 @@ final class CalendarViewModel: ObservableObject {
         if date == components.month! { return true } // ✅
         return false
     }
-    
-    // 사용자가 다른 날짜를 터치했을 때 Focus를 변경합니다.
-    func changeFocusDate(_ date: Int) {
-        let components = calendar.dateComponents([.year, .month], from: currentDate)
-        let year = components.year! // ✅
-        let month = components.month! // ✅
-        let focusDateComponents = DateComponents(year: year, month: month, day: date)
-        let focusDate = calendar.date(from: focusDateComponents)!
-        
-        currentDate = focusDate
-    }
-    
-    func verifyCurrentWeek(_ currentWeek: [CalendarModel]) -> MismatchWeekType {
-        let components = calendar.dateComponents([.month], from: currentDate)
-        let month = components.month!
-        
-        if currentWeek[0].month < month { return .past}
-        if currentWeek[currentWeek.count - 1].month > month { return .future }
-        
-        return .current
-    }
-    
-}
-
-enum MismatchWeekType {
-    case past
-    case current
-    case future
 }
 
 // .dayInt인 경우, 일요일을 시작으로 1, 2, 3 ... 순으로 표기됩니다.
