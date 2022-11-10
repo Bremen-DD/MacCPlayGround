@@ -85,12 +85,12 @@ private extension ScheduleListView {
             Button("추가") { isCreateButtonPressed.toggle() }
                 .foregroundColor(.black)
             
-            // NavigationLinks
+            // TODO: NavigationLinks will be updated..!
             NavigationLink("", isActive: $isCreateButtonPressed) {
-                ScheduleCreateView()
+//                ScheduleCreateView()
             }
             NavigationLink("", isActive: $isMailboxButtonPressed) {
-                ScheduleUnreadListView()
+//                ScheduleUnreadListView()
             }
         }
         .padding(.horizontal, 20)

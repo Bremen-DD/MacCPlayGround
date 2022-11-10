@@ -4,14 +4,13 @@
 //
 //  Created by Noah's Ark on 2022/10/19.
 //
-
 import SwiftUI
 
-struct InputFormElement<T>: View {
+struct InputFormElement: View {
     let containerType: UnderlinedTextFieldType
-    var text: Binding<T>
+    var text: Binding<String>
     
-    init(containerType: UnderlinedTextFieldType, text: Binding<T>) {
+    init(containerType: UnderlinedTextFieldType, text: Binding<String>) {
         self.containerType = containerType
         self.text = text
     }
@@ -28,7 +27,7 @@ private extension InputFormElement {
     var titleHeader: some View {
         HStack {
             Text(containerType.title)
-                .font(.caption)
+                .font(.subheadline)
                 .foregroundColor(.gray)
             
             Spacer()
@@ -41,6 +40,7 @@ private extension InputFormElement {
         case .wage: wageView
         case .payday: paydayView
         case .reason: reasonView
+        case .time: timeView
         case .none: noneView
         }
     }
@@ -51,8 +51,8 @@ private extension InputFormElement {
                 textFieldType: .workplace,
                 text: text
             )
-
-            if let text = text.wrappedValue as? String, text.count > 20 {
+            
+            if text.wrappedValue.count == 20 {
                 HStack {
                     Text("20자 이상 입력할 수 없어요.")
                         .font(.footnote)
@@ -64,48 +64,53 @@ private extension InputFormElement {
     }
     
     var wageView: some View {
-        HStack {
+        VStack {
             UnderlinedTextField(
                 textFieldType: .wage,
                 text: text
             )
             
-            Spacer()
-            
-            Text("원")
+            if let textToInt = Int(text.wrappedValue), textToInt >= 1000000 {
+                HStack {
+                    Text("1,000,000원 이상 입력할 수 없어요.")
+                        .font(.footnote)
+                        .foregroundColor(.red)
+                    Spacer()
+                }
+                .padding(.top, 4)
+            }
         }
     }
     
     var paydayView: some View {
-        HStack(alignment: .top) {
-            Text("매월")
-            Spacer()
-            VStack(spacing: 0) {
-                UnderlinedTextField(
-                    textFieldType: .payday,
-                    text: text
-                )
-                
-                if let number = text.wrappedValue as? Int16, number > 28 || number < 1 {
-                    HStack {
-                        Text("1~28 사이의 숫자를 입력해주세요")
-                            .font(.footnote)
-                            .foregroundColor(.red)
-                        Spacer()
-                    }
-                    .padding(.top, 4)
-                }
-                
-            }
-            Spacer()
+        VStack(spacing: 0) {
+            UnderlinedTextField(
+                textFieldType: .payday,
+                text: text
+            )
             
-            Text("일")
+            if let textToInt = Int16(text.wrappedValue), textToInt > 28 || textToInt < 1 {
+                HStack {
+                    Text("1~28 사이의 숫자를 입력해주세요")
+                        .font(.footnote)
+                        .foregroundColor(.red)
+                    Spacer()
+                }
+                .padding(.top, 4)
+            }
         }
     }
     
     var reasonView: some View {
         UnderlinedTextField(
             textFieldType: .reason,
+            text: text
+        )
+    }
+    
+    var timeView: some View {
+        UnderlinedTextField(
+            textFieldType: .time,
             text: text
         )
     }

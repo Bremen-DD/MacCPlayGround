@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7A29B28A291CF7C80028003A /* ComponentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A29B289291CF7C80028003A /* ComponentView.swift */; };
+		7A29B28C291D02890028003A /* BorderedPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A29B28B291D02890028003A /* BorderedPicker.swift */; };
 		7A47BDD5291C029E001D5844 /* ScheduleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A47BDD4291C029E001D5844 /* ScheduleCell.swift */; };
 		7A93757E29000BCA00D6D5BE /* MacCPlayGroundApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A93757D29000BCA00D6D5BE /* MacCPlayGroundApp.swift */; };
 		7A93758029000BCA00D6D5BE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A93757F29000BCA00D6D5BE /* ContentView.swift */; };
@@ -15,8 +17,6 @@
 		7A93758C29000F8200D6D5BE /* CompleteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A93758B29000F8200D6D5BE /* CompleteButton.swift */; };
 		7A93758E2900109200D6D5BE /* StrokeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A93758D2900109200D6D5BE /* StrokeButton.swift */; };
 		7A9375902900140E00D6D5BE /* ScheduleContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A93758F2900140E00D6D5BE /* ScheduleContainer.swift */; };
-		7A937592290018F400D6D5BE /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A937591290018F400D6D5BE /* CustomTextField.swift */; };
-		7A9375942900274C00D6D5BE /* CustomTextFieldContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A9375932900274C00D6D5BE /* CustomTextFieldContainer.swift */; };
 		894CB4C1291CC589008E4197 /* MonthlyCalculateListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894CB4C0291CC589008E4197 /* MonthlyCalculateListView.swift */; };
 		894CB4C3291CCA7A008E4197 /* MonthlyCalculateDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894CB4C2291CCA7A008E4197 /* MonthlyCalculateDetailView.swift */; };
 		894CB4C5291CCDD1008E4197 /* MonthlyCalculateDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894CB4C4291CCDD1008E4197 /* MonthlyCalculateDetailViewModel.swift */; };
@@ -29,6 +29,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7A29B289291CF7C80028003A /* ComponentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentView.swift; sourceTree = "<group>"; };
+		7A29B28B291D02890028003A /* BorderedPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderedPicker.swift; sourceTree = "<group>"; };
 		7A47BDD4291C029E001D5844 /* ScheduleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleCell.swift; sourceTree = "<group>"; };
 		7A93757A29000BCA00D6D5BE /* MacCPlayGround.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MacCPlayGround.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A93757D29000BCA00D6D5BE /* MacCPlayGroundApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacCPlayGroundApp.swift; sourceTree = "<group>"; };
@@ -38,8 +40,6 @@
 		7A93758B29000F8200D6D5BE /* CompleteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteButton.swift; sourceTree = "<group>"; };
 		7A93758D2900109200D6D5BE /* StrokeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrokeButton.swift; sourceTree = "<group>"; };
 		7A93758F2900140E00D6D5BE /* ScheduleContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleContainer.swift; sourceTree = "<group>"; };
-		7A937591290018F400D6D5BE /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
-		7A9375932900274C00D6D5BE /* CustomTextFieldContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextFieldContainer.swift; sourceTree = "<group>"; };
 		894CB4C0291CC589008E4197 /* MonthlyCalculateListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyCalculateListView.swift; sourceTree = "<group>"; };
 		894CB4C2291CCA7A008E4197 /* MonthlyCalculateDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyCalculateDetailView.swift; sourceTree = "<group>"; };
 		894CB4C4291CCDD1008E4197 /* MonthlyCalculateDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyCalculateDetailViewModel.swift; sourceTree = "<group>"; };
@@ -86,10 +86,10 @@
 				7A93758B29000F8200D6D5BE /* CompleteButton.swift */,
 				7A93758D2900109200D6D5BE /* StrokeButton.swift */,
 				7A93758F2900140E00D6D5BE /* ScheduleContainer.swift */,
-				7A937591290018F400D6D5BE /* CustomTextField.swift */,
-				7A9375932900274C00D6D5BE /* CustomTextFieldContainer.swift */,
 				898A5EC72908619F00A6BEF7 /* UnderlinedTextField.swift */,
 				898A5EC9290861CD00A6BEF7 /* InputFormElement.swift */,
+				7A29B289291CF7C80028003A /* ComponentView.swift */,
+				7A29B28B291D02890028003A /* BorderedPicker.swift */,
 				894CB4BF291CC0C9008E4197 /* Calculation */,
 				89A723CC291A383A00D063F4 /* Calendar */,
 				7A93758129000BCB00D6D5BE /* Assets.xcassets */,
@@ -203,14 +203,14 @@
 				7A93758029000BCA00D6D5BE /* ContentView.swift in Sources */,
 				7A47BDD5291C029E001D5844 /* ScheduleCell.swift in Sources */,
 				7A9375902900140E00D6D5BE /* ScheduleContainer.swift in Sources */,
-				7A937592290018F400D6D5BE /* CustomTextField.swift in Sources */,
-				7A9375942900274C00D6D5BE /* CustomTextFieldContainer.swift in Sources */,
 				894CB4C9291CF13F008E4197 /* ScheduleUnreadListView.swift in Sources */,
+				7A29B28A291CF7C80028003A /* ComponentView.swift in Sources */,
 				894CB4C3291CCA7A008E4197 /* MonthlyCalculateDetailView.swift in Sources */,
 				7A93758E2900109200D6D5BE /* StrokeButton.swift in Sources */,
 				7A93757E29000BCA00D6D5BE /* MacCPlayGroundApp.swift in Sources */,
 				894CB4C1291CC589008E4197 /* MonthlyCalculateListView.swift in Sources */,
 				7A93758C29000F8200D6D5BE /* CompleteButton.swift in Sources */,
+				7A29B28C291D02890028003A /* BorderedPicker.swift in Sources */,
 				898A5EC82908619F00A6BEF7 /* UnderlinedTextField.swift in Sources */,
 				89A723CE291A387A00D063F4 /* ScheduleListViewModel.swift in Sources */,
 				89A723CB291A357C00D063F4 /* ScheduleListView.swift in Sources */,
