@@ -9,7 +9,7 @@
 import Foundation
 import SwiftUI
 
-final class CalendarViewModel: ObservableObject {
+final class SchduleListViewModel: ObservableObject {
     let calendar = Calendar.current
     @Published var nextDate = Calendar.current.date(byAdding: .weekOfMonth, value: 1, to: Date())! // ✅
     @Published var previousDate = Calendar.current.date(byAdding: .weekOfMonth, value: -1, to: Date())! // ✅
@@ -45,7 +45,7 @@ final class CalendarViewModel: ObservableObject {
     }
 }
 
-extension CalendarViewModel {
+extension SchduleListViewModel {
     // 일주일 뒤의 날짜를 반환합니다.
     private func getNextWeek() {
         guard let dateOfNextWeek = calendar.date(byAdding: .weekOfMonth, value: 1, to: currentDate)
@@ -148,6 +148,35 @@ extension CalendarViewModel {
         let components = calendar.dateComponents([.year, .month, .day], from: currentDate)
         if date == components.month! { return true } // ✅
         return false
+    }
+}
+
+// MARK: ScheduleCell
+extension SchduleListViewModel {
+    // 🔥 필요한 것만 받기 -> 파라미터 너무 많음
+    // 🔥 WorkspaceEntity 하나 받기 -> 간단함 but over-fetching
+    func defineWorkType(repeatDays: [String], workDate: Date, startHour: Int16, startMinute: Int16, endHour: Int16, endMinute: Int16, spentHour: Int16) -> (type: String, color: Color) {
+        let formatter = DateFormatter(dateFormatType: .weekday)
+        let _ = formatter.string(from: workDate)
+        let spentHourOfNormalCase: Int16 = endHour - startHour
+        let timeDifference = spentHour - spentHourOfNormalCase
+        
+        print(timeDifference)
+        
+//        for day in repeatDays {
+//            if day != weekday { return ("추가", .blue) }
+//        }
+
+        switch timeDifference {
+        case 0:
+            return ("정규", .green)
+        case 1...:
+            return ("연장", .orange)
+        case _ where timeDifference < 0:
+            return ("축소", .pink)
+        default:
+            return ("정규", .green)
+        }
     }
 }
 

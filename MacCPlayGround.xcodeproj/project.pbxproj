@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7A47BDD3291BF6DB001D5844 /* ScheduleListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A47BDD2291BF6DB001D5844 /* ScheduleListView.swift */; };
+		7A47BDD3291BF6DB001D5844 /* ScheduleListView_Original.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A47BDD2291BF6DB001D5844 /* ScheduleListView_Original.swift */; };
 		7A47BDD5291C029E001D5844 /* ScheduleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A47BDD4291C029E001D5844 /* ScheduleCell.swift */; };
 		7A93757E29000BCA00D6D5BE /* MacCPlayGroundApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A93757D29000BCA00D6D5BE /* MacCPlayGroundApp.swift */; };
 		7A93758029000BCA00D6D5BE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A93757F29000BCA00D6D5BE /* ContentView.swift */; };
@@ -20,12 +20,12 @@
 		7A9375942900274C00D6D5BE /* CustomTextFieldContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A9375932900274C00D6D5BE /* CustomTextFieldContainer.swift */; };
 		898A5EC82908619F00A6BEF7 /* UnderlinedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898A5EC72908619F00A6BEF7 /* UnderlinedTextField.swift */; };
 		898A5ECA290861CD00A6BEF7 /* InputFormElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898A5EC9290861CD00A6BEF7 /* InputFormElement.swift */; };
-		89A723CB291A357C00D063F4 /* WeeklyCalendarLoadLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A723CA291A357C00D063F4 /* WeeklyCalendarLoadLogic.swift */; };
-		89A723CE291A387A00D063F4 /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A723CD291A387A00D063F4 /* CalendarViewModel.swift */; };
+		89A723CB291A357C00D063F4 /* ScheduleListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A723CA291A357C00D063F4 /* ScheduleListView.swift */; };
+		89A723CE291A387A00D063F4 /* ScheduleListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A723CD291A387A00D063F4 /* ScheduleListViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		7A47BDD2291BF6DB001D5844 /* ScheduleListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleListView.swift; sourceTree = "<group>"; };
+		7A47BDD2291BF6DB001D5844 /* ScheduleListView_Original.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleListView_Original.swift; sourceTree = "<group>"; };
 		7A47BDD4291C029E001D5844 /* ScheduleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleCell.swift; sourceTree = "<group>"; };
 		7A93757A29000BCA00D6D5BE /* MacCPlayGround.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MacCPlayGround.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A93757D29000BCA00D6D5BE /* MacCPlayGroundApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacCPlayGroundApp.swift; sourceTree = "<group>"; };
@@ -39,8 +39,8 @@
 		7A9375932900274C00D6D5BE /* CustomTextFieldContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextFieldContainer.swift; sourceTree = "<group>"; };
 		898A5EC72908619F00A6BEF7 /* UnderlinedTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnderlinedTextField.swift; sourceTree = "<group>"; };
 		898A5EC9290861CD00A6BEF7 /* InputFormElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFormElement.swift; sourceTree = "<group>"; };
-		89A723CA291A357C00D063F4 /* WeeklyCalendarLoadLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyCalendarLoadLogic.swift; sourceTree = "<group>"; };
-		89A723CD291A387A00D063F4 /* CalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
+		89A723CA291A357C00D063F4 /* ScheduleListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleListView.swift; sourceTree = "<group>"; };
+		89A723CD291A387A00D063F4 /* ScheduleListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleListViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,10 +100,10 @@
 		89A723CC291A383A00D063F4 /* Calendar */ = {
 			isa = PBXGroup;
 			children = (
-				89A723CD291A387A00D063F4 /* CalendarViewModel.swift */,
-				89A723CA291A357C00D063F4 /* WeeklyCalendarLoadLogic.swift */,
-				7A47BDD2291BF6DB001D5844 /* ScheduleListView.swift */,
+				89A723CD291A387A00D063F4 /* ScheduleListViewModel.swift */,
+				89A723CA291A357C00D063F4 /* ScheduleListView.swift */,
 				7A47BDD4291C029E001D5844 /* ScheduleCell.swift */,
+				7A47BDD2291BF6DB001D5844 /* ScheduleListView_Original.swift */,
 			);
 			path = Calendar;
 			sourceTree = "<group>";
@@ -179,7 +179,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				898A5ECA290861CD00A6BEF7 /* InputFormElement.swift in Sources */,
-				7A47BDD3291BF6DB001D5844 /* ScheduleListView.swift in Sources */,
+				7A47BDD3291BF6DB001D5844 /* ScheduleListView_Original.swift in Sources */,
 				7A93758029000BCA00D6D5BE /* ContentView.swift in Sources */,
 				7A47BDD5291C029E001D5844 /* ScheduleCell.swift in Sources */,
 				7A9375902900140E00D6D5BE /* ScheduleContainer.swift in Sources */,
@@ -189,8 +189,8 @@
 				7A93757E29000BCA00D6D5BE /* MacCPlayGroundApp.swift in Sources */,
 				7A93758C29000F8200D6D5BE /* CompleteButton.swift in Sources */,
 				898A5EC82908619F00A6BEF7 /* UnderlinedTextField.swift in Sources */,
-				89A723CE291A387A00D063F4 /* CalendarViewModel.swift in Sources */,
-				89A723CB291A357C00D063F4 /* WeeklyCalendarLoadLogic.swift in Sources */,
+				89A723CE291A387A00D063F4 /* ScheduleListViewModel.swift in Sources */,
+				89A723CB291A357C00D063F4 /* ScheduleListView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

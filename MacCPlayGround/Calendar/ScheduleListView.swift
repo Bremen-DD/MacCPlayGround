@@ -5,13 +5,13 @@
 //  Created by Hyeon-sang Lee on 2022/11/08.
 //
 // 급여일 기준으로 보게 될텐데 월 단위 분리가 맞나?
+// ✅ 강제 unwrapping 이 진행된 경우를 주석으로 표기했습니다.
 
 import SwiftUI
 
-struct WeeklyCalendarLoadLogic: View {
-    @ObservedObject var viewModel = CalendarViewModel()
+struct ScheduleListView: View {
+    @ObservedObject var viewModel = SchduleListViewModel()
     @State var selection = 1
-    let formatter = DateFormatter(dateFormatType: .weekday)
     let weekDays: [String] = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
     var currentMonth: String {
         let components = Calendar.current.dateComponents([.year, .month], from: viewModel.currentDate)
@@ -29,6 +29,11 @@ struct WeeklyCalendarLoadLogic: View {
     var nextWeek: [CalendarModel] {
         return viewModel.loadTheFirstDayOfWeek(viewModel.nextDate)
     }
+    let mockData: [WorkspaceEntity] = [
+        WorkspaceEntity(name: "팍이네 팍팍 감자탕", schedules: ScheduleEntity(), workdays: WorkdayEntity(endHour: 18)),
+        WorkspaceEntity(name: "팍이네 팍팍 감자탕", schedules: ScheduleEntity(), workdays: WorkdayEntity(endHour: 15)),
+        WorkspaceEntity(name: "팍이네 팍팍 감자탕", schedules: ScheduleEntity(), workdays: WorkdayEntity(endHour: 22)),
+    ]
     
     var body: some View {
         VStack {
@@ -39,7 +44,7 @@ struct WeeklyCalendarLoadLogic: View {
     }
 }
 
-private extension WeeklyCalendarLoadLogic {
+private extension ScheduleListView {
     var header: some View {
         HStack(spacing: 0) {
             Group {
@@ -135,7 +140,7 @@ private extension WeeklyCalendarLoadLogic {
                                 .font(.callout)
                                 .foregroundColor(.black)
                         }
-                        .frame(minWidth: 49.5, maxWidth: .infinity)
+                        .frame(maxWidth: .infinity)
                         .disabled(viewModel.verifyCurrentMonth(currentWeek[index].month) ? false : true)
                         
                         Circle()
@@ -190,12 +195,13 @@ private extension WeeklyCalendarLoadLogic {
     }
     
     var scheduleList: some View {
-        VStack(spacing: 8) {
-            ScheduleCell(type: .normal)
-            ScheduleCell(type: .short)
-            ScheduleCell(type: .long)
-            ScheduleCell(type: .plus)
-            Spacer()
+        ScrollView(showsIndicators: false) {
+            VStack(spacing: 8) {
+                ForEach(mockData) { data in
+                    ScheduleCell(data: data)
+                }
+                Spacer()
+            }
         }
     }
 }
