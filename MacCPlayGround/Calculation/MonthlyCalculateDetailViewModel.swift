@@ -33,6 +33,7 @@ extension MonthlyCalculateDetailViewModel {
         let paymentYearMonthDay = calendar.date(from: currentPoint)! // ✅
         let previousPaymentYearMonthDay = calendar.date(from: previousPoint)! // ✅
 
+        // SchduleListViewModel 의 113번 라인 참고
         switch timeDifference {
         case 0...: //25일, 25일 전
             let days = calendar
