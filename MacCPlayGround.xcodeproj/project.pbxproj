@@ -20,6 +20,8 @@
 		894CB4C1291CC589008E4197 /* MonthlyCalculateListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894CB4C0291CC589008E4197 /* MonthlyCalculateListView.swift */; };
 		894CB4C3291CCA7A008E4197 /* MonthlyCalculateDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894CB4C2291CCA7A008E4197 /* MonthlyCalculateDetailView.swift */; };
 		894CB4C5291CCDD1008E4197 /* MonthlyCalculateDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894CB4C4291CCDD1008E4197 /* MonthlyCalculateDetailViewModel.swift */; };
+		894CB4C7291CEF60008E4197 /* ScheduleCreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894CB4C6291CEF60008E4197 /* ScheduleCreateView.swift */; };
+		894CB4C9291CF13F008E4197 /* ScheduleUnreadListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894CB4C8291CF13F008E4197 /* ScheduleUnreadListView.swift */; };
 		898A5EC82908619F00A6BEF7 /* UnderlinedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898A5EC72908619F00A6BEF7 /* UnderlinedTextField.swift */; };
 		898A5ECA290861CD00A6BEF7 /* InputFormElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898A5EC9290861CD00A6BEF7 /* InputFormElement.swift */; };
 		89A723CB291A357C00D063F4 /* ScheduleListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A723CA291A357C00D063F4 /* ScheduleListView.swift */; };
@@ -41,6 +43,8 @@
 		894CB4C0291CC589008E4197 /* MonthlyCalculateListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyCalculateListView.swift; sourceTree = "<group>"; };
 		894CB4C2291CCA7A008E4197 /* MonthlyCalculateDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyCalculateDetailView.swift; sourceTree = "<group>"; };
 		894CB4C4291CCDD1008E4197 /* MonthlyCalculateDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyCalculateDetailViewModel.swift; sourceTree = "<group>"; };
+		894CB4C6291CEF60008E4197 /* ScheduleCreateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleCreateView.swift; sourceTree = "<group>"; };
+		894CB4C8291CF13F008E4197 /* ScheduleUnreadListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleUnreadListView.swift; sourceTree = "<group>"; };
 		898A5EC72908619F00A6BEF7 /* UnderlinedTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnderlinedTextField.swift; sourceTree = "<group>"; };
 		898A5EC9290861CD00A6BEF7 /* InputFormElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFormElement.swift; sourceTree = "<group>"; };
 		89A723CA291A357C00D063F4 /* ScheduleListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleListView.swift; sourceTree = "<group>"; };
@@ -118,6 +122,8 @@
 				89A723CD291A387A00D063F4 /* ScheduleListViewModel.swift */,
 				89A723CA291A357C00D063F4 /* ScheduleListView.swift */,
 				7A47BDD4291C029E001D5844 /* ScheduleCell.swift */,
+				894CB4C6291CEF60008E4197 /* ScheduleCreateView.swift */,
+				894CB4C8291CF13F008E4197 /* ScheduleUnreadListView.swift */,
 			);
 			path = Calendar;
 			sourceTree = "<group>";
@@ -199,6 +205,7 @@
 				7A9375902900140E00D6D5BE /* ScheduleContainer.swift in Sources */,
 				7A937592290018F400D6D5BE /* CustomTextField.swift in Sources */,
 				7A9375942900274C00D6D5BE /* CustomTextFieldContainer.swift in Sources */,
+				894CB4C9291CF13F008E4197 /* ScheduleUnreadListView.swift in Sources */,
 				894CB4C3291CCA7A008E4197 /* MonthlyCalculateDetailView.swift in Sources */,
 				7A93758E2900109200D6D5BE /* StrokeButton.swift in Sources */,
 				7A93757E29000BCA00D6D5BE /* MacCPlayGroundApp.swift in Sources */,
@@ -207,6 +214,7 @@
 				898A5EC82908619F00A6BEF7 /* UnderlinedTextField.swift in Sources */,
 				89A723CE291A387A00D063F4 /* ScheduleListViewModel.swift in Sources */,
 				89A723CB291A357C00D063F4 /* ScheduleListView.swift in Sources */,
+				894CB4C7291CEF60008E4197 /* ScheduleCreateView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

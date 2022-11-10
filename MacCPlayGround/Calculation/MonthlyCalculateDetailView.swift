@@ -90,8 +90,8 @@ private extension MonthlyCalculateDetailView {
                         ForEach(data, id: \.self) { date in
                             let day = Calendar.current.dateComponents([.day], from: date).day!
                             Text("\(day)")
-                                .frame(maxWidth: .infinity)
                         }
+                        .frame(maxWidth: .infinity)
                         Spacer()
                     }
                 }

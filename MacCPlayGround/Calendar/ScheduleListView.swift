@@ -12,6 +12,8 @@ import SwiftUI
 struct ScheduleListView: View {
     @ObservedObject var viewModel = SchduleListViewModel()
     @State var selection = 1
+    @State var isCreateButtonPressed = false
+    @State var isMailboxButtonPressed = false
     let weekDays: [String] = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
     var currentMonth: String {
         let components = Calendar.current.dateComponents([.year, .month], from: viewModel.currentDate)
@@ -36,11 +38,25 @@ struct ScheduleListView: View {
     ]
     
     var body: some View {
-        VStack {
-            header
-            scheduleContainer
+        if #available(iOS 16.0, *) {
+            NavigationStack {
+                VStack {
+                    header
+                    scheduleContainer
+                }
+                .background(.gray)
+                .toolbar(.hidden)
+            }
+        } else {
+            NavigationView {
+                VStack {
+                    header
+                    scheduleContainer
+                }
+                .background(.gray)
+                .navigationBarHidden(true)
+            }
         }
-        .background(.gray)
     }
 }
 
@@ -63,11 +79,19 @@ private extension ScheduleListView {
             .font(.title)
             .foregroundColor(.black)
             Spacer()
-            Button("메일함") { }
+            Button("메일함") { isMailboxButtonPressed.toggle() }
                 .padding(.horizontal)
                 .foregroundColor(.black)
-            Button("추가") { }
+            Button("추가") { isCreateButtonPressed.toggle() }
                 .foregroundColor(.black)
+            
+            // NavigationLinks
+            NavigationLink("", isActive: $isCreateButtonPressed) {
+                ScheduleCreateView()
+            }
+            NavigationLink("", isActive: $isMailboxButtonPressed) {
+                ScheduleUnreadListView()
+            }
         }
         .padding(.horizontal, 20)
         .padding(.top, 24)

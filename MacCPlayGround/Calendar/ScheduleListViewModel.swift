@@ -72,9 +72,9 @@ extension SchduleListViewModel {
         let day = todayComponents.day! // ✅
         
         // 연, 월, 일 데이터를 사용하여 DateComponents를 생성합니다.
-        let sampleDate = DateComponents(year: year, month: month, day: day)
+        let extractedDate = DateComponents(year: year, month: month, day: day)
         
-        return calendar.date(from: sampleDate)! // ✅
+        return calendar.date(from: extractedDate)! // ✅
     }
     
     // 한 달 뒤의 날짜를 반환합니다.
