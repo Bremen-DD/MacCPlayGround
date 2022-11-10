@@ -48,13 +48,17 @@ struct ScheduleCell: View {
             }
             HStack {
                 Spacer()
-                Text("확정하기")
-                    .font(.caption)
-                    .foregroundColor(.white)
-                    .padding(.horizontal, 29)
-                    .padding(.vertical, 5)
-                    .background(workType.1)
-                    .cornerRadius(10)
+                Button {
+                    
+                } label: {
+                    Text("확정하기")
+                        .font(.caption)
+                        .foregroundColor(.white)
+                        .padding(.horizontal, 29)
+                        .padding(.vertical, 5)
+                        .background(workType.1)
+                        .cornerRadius(10)
+                }
             }
             .padding(.vertical, 8)
 
