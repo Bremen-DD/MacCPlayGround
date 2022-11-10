@@ -11,7 +11,7 @@ import SwiftUI
 struct MacCPlayGroundApp: App {
     var body: some Scene {
         WindowGroup {
-            ScheduleListView()
+            MonthlyCalculateDetailView()
         }
     }
 }
